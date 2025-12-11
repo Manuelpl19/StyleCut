@@ -15,7 +15,7 @@ export default function Booking() {
 
   // 1. Cargar Servicios al inicio
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/services')
+    fetch('https://stylecut-backend.onrender.com/api/services')
       .then(res => res.json())
       .then(data => {
         setServices(data);
@@ -31,7 +31,7 @@ export default function Booking() {
       setAvailableSlots([]); // Limpiar anteriores
       
       // Llamada a tu API nueva
-      fetch(`http://127.0.0.1:8000/api/slots?date=${selectedDate}&service_id=${selectedService.id}`)
+      fetch(`https://stylecut-backend.onrender.com/api/slots?date=${selectedDate}&service_id=${selectedService.id}`)
         .then(res => res.json())
         .then(data => {
           setAvailableSlots(data);
@@ -51,7 +51,7 @@ export default function Booking() {
     if (!selectedService || !selectedDate || !selectedTime) return;
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/appointments', {
+      const response = await fetch('https://stylecut-backend.onrender.com/api/appointments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

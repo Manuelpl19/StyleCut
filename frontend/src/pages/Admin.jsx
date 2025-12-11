@@ -7,7 +7,7 @@ export default function Admin() {
 
   // Pedimos la lista al cargar
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/appointments')
+    fetch('https://stylecut-backend.onrender.com/api/appointments')
       .then(res => res.json())
       .then(data => {
         setAppointments(data);

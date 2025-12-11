@@ -6,7 +6,7 @@ export default function Shop() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCartStore();
-  const API_URL = 'http://127.0.0.1:8000/api/products';
+  const API_URL = 'https://stylecut-backend.onrender.com/api/products';
 
   useEffect(() => {
     fetch(API_URL)
