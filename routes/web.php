@@ -9,27 +9,41 @@ Route::get('/', function () {
 
 Route::get('/setup-database', function () {
     try {
-        // 1. Ejecutar las Migraciones (Crear tablas)
+        // 1. FORZAR LIMPIEZA DE CACHÉ (Lo más importante)
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
+
+        // 2. DIAGNÓSTICO: ¿Qué datos tienes?
+        $host = config('database.connections.pgsql.host');
+        $port = config('database.connections.pgsql.port');
+        $database = config('database.connections.pgsql.database');
+        
+        // Si el host sigue siendo 127.0.0.1, paramos y avisamos
+        if ($host == '127.0.0.1') {
+            return "<h1>⚠️ ERROR CRÍTICO</h1>
+                    <p>Laravel sigue leyendo <b>127.0.0.1</b>.</p>
+                    <p>Esto significa que no está detectando la variable de entorno <code>DB_HOST</code> en Render.</p>
+                    <p>Por favor, revisa en Render que la variable se llame EXACTAMENTE <code>DB_HOST</code> (sin espacios al final).</p>";
+        }
+
+        // 3. Si el host parece correcto, intentamos migrar
         Artisan::call('migrate --force');
         $migracion = Artisan::output();
 
-        // 2. Ejecutar Seeder de Productos
-        Artisan::call('db:seed', [
-            '--class' => 'ProductSeeder',
-            '--force' => true
-        ]);
+        Artisan::call('db:seed', ['--class' => 'ProductSeeder', '--force' => true]);
         $productos = Artisan::output();
 
-        // 3. Ejecutar Seeder de Servicios
-        Artisan::call('db:seed', [
-            '--class' => 'ServiceSeeder',
-            '--force' => true
-        ]);
+        Artisan::call('db:seed', ['--class' => 'ServiceSeeder', '--force' => true]);
         $servicios = Artisan::output();
 
-        return "<h1>¡Éxito! Base de datos configurada.</h1><pre>$migracion \n $productos \n $servicios</pre>";
+        return "<h1>¡ÉXITO TOTAL! 🎉</h1>
+                <p>Conectado a: <b>$host</b></p>
+                <pre>$migracion \n $productos \n $servicios</pre>";
 
     } catch (\Exception $e) {
-        return "<h1>Error :(</h1><p>" . $e->getMessage() . "</p>";
+        // Mostrar error detallado
+        return "<h1>Error :(</h1>
+                <p>Intentando conectar a: <b>" . config('database.connections.pgsql.host') . "</b></p>
+                <p>Mensaje: " . $e->getMessage() . "</p>";
     }
 });
