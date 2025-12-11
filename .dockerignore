@@ -1,0 +1,4 @@
+.git
+node_modules
+vendor
+frontend/node_modules

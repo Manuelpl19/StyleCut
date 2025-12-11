@@ -10,6 +10,19 @@ use App\Models\Appointment;
 
 class AppointmentController extends Controller
 {
+
+    public function index()
+    {
+        // Traemos las citas con los datos del usuario y servicio relacionados
+        // Ordenadas por fecha y hora
+        $appointments = Appointment::with(['user', 'service'])
+            ->orderBy('date', 'asc')
+            ->orderBy('start_time', 'asc')
+            ->get();
+
+        return response()->json($appointments);
+    }
+
     public function getAvailableSlots(Request $request)
     {
         // 1. Recibimos fecha y servicio

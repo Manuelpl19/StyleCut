@@ -14,3 +14,4 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/slots', [AppointmentController::class, 'getAvailableSlots']);
 Route::post('/appointments', [AppointmentController::class, 'store']);
+Route::get('/appointments', [AppointmentController::class, 'index']);

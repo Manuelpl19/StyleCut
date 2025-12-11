@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import { ShoppingBag, Scissors, Calendar } from 'lucide-react';
 import { useCartStore } from './cartStore';
 import CartDrawer from './CartDrawer';
+import Admin from './pages/Admin';
 
 // Páginas
 import Home from './pages/Home';
@@ -59,11 +60,12 @@ function App() {
         <CartDrawer />
         <Navbar />
         
-        {/* AQUÍ CAMBIA EL CONTENIDO */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/book" element={<Booking />} />
+          {/* Nueva ruta secreta */}
+          <Route path="/admin" element={<Admin />} /> 
         </Routes>
 
       </div>
