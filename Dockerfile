@@ -25,6 +25,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # 6. Instalar dependencias de Laravel
 WORKDIR /var/www/html
+# --- LÍNEA NUEVA DE LIMPIEZA ---
+RUN rm -f bootstrap/cache/*.php 
+# -------------------------------
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
 # 7. Permisos
