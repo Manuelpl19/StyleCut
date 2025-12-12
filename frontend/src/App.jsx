@@ -66,7 +66,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/book" element={<Booking />} />
-          {/* Nueva ruta secreta */}
+
           <Route path="/admin" element={<Admin />} /> 
         </Routes>
 

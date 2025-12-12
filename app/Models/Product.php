@@ -9,7 +9,6 @@ class Product extends Model
 {
     use HasFactory;
 
-    // Estos son los campos que permitimos guardar
     protected $fillable = [
         'name', 
         'description', 

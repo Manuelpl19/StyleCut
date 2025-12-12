@@ -9,18 +9,16 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Crear el Usuario Principal (Fijo, sin usar fake)
-        // Usamos firstOrCreate para que no falle si ya existe
+        // 1. Crear el Usuario Principal
         User::firstOrCreate(
             ['email' => 'cliente@stylecut.com'],
             [
                 'name' => 'Cliente VIP',
-                'password' => bcrypt('123456'), // Contraseña segura
+                'password' => bcrypt('123456'),
                 'email_verified_at' => now(),
             ]
         );
 
-        // 2. Llamar a los otros seeders de productos y servicios
         $this->call([
             ProductSeeder::class,
             ServiceSeeder::class,

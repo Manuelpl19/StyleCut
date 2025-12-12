@@ -10,7 +10,6 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        // Devuelve solo los servicios que estén activos
         return response()->json(Service::where('is_active', true)->get());
     }
 }

@@ -10,7 +10,6 @@ class ProductController extends Controller
 {
     public function index()
     {
-        // Devuelve todos los productos en formato JSON
         return response()->json(Product::all());
     }
 }

@@ -17,7 +17,7 @@ class ServiceSeeder extends Seeder
         'name' => 'Corte Clásico',
         'description' => 'Corte tradicional a tijera o máquina con lavado incluido.',
         'price' => 20.00,
-        'duration_minutes' => 30, // Importante para la agenda
+        'duration_minutes' => 30,
         'is_active' => true
     ]);
 
@@ -35,7 +35,7 @@ class ServiceSeeder extends Seeder
         'name' => 'Experiencia Completa',
         'description' => 'Corte de pelo + Arreglo de barba + Masaje capilar.',
         'price' => 32.00,
-        'duration_minutes' => 45, // 1 hora y 15 min
+        'duration_minutes' => 45,
         'is_active' => true
     ]);
 }

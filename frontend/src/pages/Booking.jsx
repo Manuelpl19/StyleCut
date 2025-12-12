@@ -3,7 +3,6 @@ import { Clock, Check, Scissors, ChevronRight, Calendar as CalendarIcon, ArrowLe
 import { toast } from 'sonner';
 
 export default function Booking() {
-  // Estados para cada paso del proceso
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   
@@ -29,9 +28,9 @@ export default function Booking() {
   useEffect(() => {
     if (selectedService && selectedDate) {
       setLoadingSlots(true);
-      setAvailableSlots([]); // Limpiar anteriores
+      setAvailableSlots([]);
       
-      // Llamada a tu API nueva
+      // Llamada a la API 
       fetch(`https://stylecut-backend.onrender.com/api/slots?date=${selectedDate}&service_id=${selectedService.id}`)
         .then(res => res.json())
         .then(data => {
@@ -45,15 +44,13 @@ export default function Booking() {
     }
   }, [selectedDate, selectedService]);
 
-  // Función para manejar el "Confirmar"
-  // Función para guardar en la BD
+
 const handleBooking = async () => {
     if (!selectedService || !selectedDate || !selectedTime) {
         toast.error("Por favor, completa todos los campos.");
         return;
     }
 
-    // Promesa con Toast de carga (queda SUPER PRO)
     const promise = fetch('https://stylecut-backend.onrender.com/api/appointments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -71,7 +68,6 @@ const handleBooking = async () => {
     toast.promise(promise, {
         loading: 'Confirmando cita con el servidor...',
         success: (data) => {
-            // Esperar 2 segundos y redirigir
             setTimeout(() => window.location.href = '/admin', 2000);
             return `¡Reserva confirmada! Te esperamos el ${selectedDate}`;
         },
@@ -106,7 +102,7 @@ const handleBooking = async () => {
                   key={service.id}
                   onClick={() => {
                     setSelectedService(service);
-                    setSelectedTime(null); // Resetear hora si cambia servicio
+                    setSelectedTime(null);
                   }}
                   className={`
                     p-4 rounded-xl border-2 cursor-pointer transition-all flex justify-between items-center group
@@ -135,7 +131,7 @@ const handleBooking = async () => {
           )}
         </div>
 
-        {/* COLUMNA DERECHA: Calendario y Hora (Se activa al elegir servicio) */}
+        {/* COLUMNA DERECHA: Calendario y Hora*/}
         <div className={`space-y-6 transition-opacity duration-500 ${selectedService ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
           
           {/* Selector de Fecha */}
@@ -155,7 +151,7 @@ const handleBooking = async () => {
             </div>
           </div>
 
-          {/* Grid de Horas (Solo si hay fecha) */}
+          {/* Grid de Horas */}
           {selectedDate && (
             <div className="animate-fade-in-up">
               <h2 className="text-xl font-bold flex items-center gap-2 mb-4">

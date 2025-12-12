@@ -32,7 +32,6 @@ export default function Home() {
           <h3 className="text-xl font-bold mb-2">Cortes Clásicos</h3>
           <p className="text-gray-500">Maestros de la vieja escuela con técnicas modernas.</p>
         </div>
-        {/* Puedes añadir más features aquí */}
       </div>
     </div>
   );

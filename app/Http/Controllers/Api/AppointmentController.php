@@ -35,7 +35,7 @@ class AppointmentController extends Controller
             return response()->json(['error' => 'Datos inválidos'], 400);
         }
 
-        // 2. Definimos horario de apertura (Ej: 10:00 a 20:00)
+        // 2. Definimos horario de apertura y cierre
         $startOfDay = Carbon::parse("$date 10:00:00");
         $endOfDay = Carbon::parse("$date 20:00:00");
 
@@ -61,7 +61,7 @@ class AppointmentController extends Controller
             'time' => 'required', // Formato HH:MM
         ]);
 
-        // 2. Comprobar si YA existe una cita a esa hora (Doble seguridad)
+        // 2. Comprobar si ya existe una cita a esa hora (Doble seguridad)
         $exists = Appointment::where('date', $request->date)
                              ->where('start_time', $request->time)
                              ->exists();
@@ -72,7 +72,7 @@ class AppointmentController extends Controller
 
         // 3. Crear la reserva
         $appointment = Appointment::create([
-            'user_id' => 1, // Usamos el cliente genérico que acabamos de crear
+            'user_id' => 1, // Usamos el cliente genérico 
             'service_id' => $request->service_id,
             'date' => $request->date,
             'start_time' => $request->time,
