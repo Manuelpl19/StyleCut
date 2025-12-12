@@ -4,13 +4,13 @@ import { ShoppingBag, Scissors, Calendar } from 'lucide-react';
 import { useCartStore } from './cartStore';
 import CartDrawer from './CartDrawer';
 import Admin from './pages/Admin';
+import { Toaster } from 'sonner'; 
 
 // Páginas
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Booking from './pages/Booking';
 
-// Componente Navbar separado para usar hooks del router
 function Navbar() {
   const { cart, openCart } = useCartStore();
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -57,6 +57,8 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+        <Toaster position="top-center" richColors />
+        
         <CartDrawer />
         <Navbar />
         

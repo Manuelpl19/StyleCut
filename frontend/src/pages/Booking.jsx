@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Clock, Check, Scissors, ChevronRight, Calendar as CalendarIcon, ArrowLeft } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function Booking() {
   // Estados para cada paso del proceso
@@ -46,39 +47,36 @@ export default function Booking() {
 
   // Función para manejar el "Confirmar"
   // Función para guardar en la BD
-  const handleBooking = async () => {
-    // Validar antes de enviar
-    if (!selectedService || !selectedDate || !selectedTime) return;
+const handleBooking = async () => {
+    if (!selectedService || !selectedDate || !selectedTime) {
+        toast.error("Por favor, completa todos los campos.");
+        return;
+    }
 
-    try {
-      const response = await fetch('https://stylecut-backend.onrender.com/api/appointments', {
+    // Promesa con Toast de carga (queda SUPER PRO)
+    const promise = fetch('https://stylecut-backend.onrender.com/api/appointments', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           service_id: selectedService.id,
           date: selectedDate,
           time: selectedTime
         })
-      });
+    }).then(async (response) => {
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Error al reservar");
+        return data;
+    });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // ÉXITO
-        alert("✅ ¡Cita guardada correctamente en la Base de Datos!");
-        // Opcional: Redirigir al inicio o limpiar
-        window.location.href = '/'; 
-      } else {
-        // ERROR (Ej: Hueco ocupado)
-        alert("❌ Error: " + (data.error || "No se pudo guardar"));
-      }
-
-    } catch (error) {
-      console.error("Error de conexión:", error);
-      alert("Error conectando con el servidor");
-    }
+    toast.promise(promise, {
+        loading: 'Confirmando cita con el servidor...',
+        success: (data) => {
+            // Esperar 2 segundos y redirigir
+            setTimeout(() => window.location.href = '/admin', 2000);
+            return `¡Reserva confirmada! Te esperamos el ${selectedDate}`;
+        },
+        error: (err) => `Error: ${err.message}`
+    });
   };
 
   return (
