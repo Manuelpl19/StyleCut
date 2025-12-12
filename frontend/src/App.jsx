@@ -26,7 +26,7 @@ function Navbar() {
           <div className="bg-black p-2 rounded-lg text-white group-hover:bg-indigo-600 transition-colors">
             <Scissors size={24} />
           </div>
-          <span className="text-2xl font-bold tracking-tight">StyleCut.</span>
+          <span className="text-2xl font-bold tracking-tight">StyleCut</span>
         </Link>
 
         {/* Menú Central */}
